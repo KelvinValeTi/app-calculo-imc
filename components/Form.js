@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {View, Text, TextInput, Button, TouchableOpacity} from "react-native";
+import {View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard} from "react-native";
 import ResultImc from './ResultImc';
 import styles from "./StyleForm";
 
@@ -85,56 +85,56 @@ export default function Form(){
      * RETORNO
      */
     return (
-    <View style={styles.body} >
+    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+        <View style={styles.body} >
 
-        {/**RENDERIZAÇÃO CONDICIONAL */}
-        {imc==null?
-            <View style={styles.form}>
+            {/**RENDERIZAÇÃO CONDICIONAL */}
+            {imc==null?
+                <View style={styles.form}>
 
-                <Text style={styles.textLabel}>Altura:</Text>
-                
-                {msgErroAltura!=null? <Text style={styles.error}>{msgErroAltura}</Text>:<View></View>}
+                    <Text style={styles.textLabel}>Altura:</Text>
+                    
+                    {msgErroAltura!=null? <Text style={styles.error}>{msgErroAltura}</Text>:<View></View>}
 
-                <TextInput
-                style={styles.input} 
-                placeholder="Altura em centimetros"
-                onChangeText={setAltura}
-                value={altura}
-                keyboardType='numeric'
-                />
-
-                <Text style={styles.textLabel}>Peso:</Text>
-
-                {msgErroPeso!=null? <Text style={styles.error}>{msgErroPeso}</Text>:<View></View>}
-                
-                <TextInput 
-                    style={styles.input}
-                    placeholder="Peso em Kg"
-                    onChangeText={setPeso}
-                    value={peso}
+                    <TextInput
+                    style={styles.input} 
+                    placeholder="Altura em centimetros"
+                    onChangeText={setAltura}
+                    value={altura}
                     keyboardType='numeric'
-                />
+                    />
 
-                <TouchableOpacity
-                    style={styles.button} 
-                    onPress={()=>validation()}
-                >
-                    <Text style={styles.textButton} >Calcular Imc</Text>
-                </TouchableOpacity>
-            </View>            
-            : 
-            <View style={styles.viewResultContainer}>
-                <ResultImc imc ={imc} risco={msgClassification} />
-                <TouchableOpacity 
-                    style={styles.button} 
-                    onPress={()=>reset()}
-                >
-                    <Text style={styles.textButton}>Calcular Novamente</Text>
-                </TouchableOpacity>
-            </View>
-            }
-        {/**<Text>{altura +"  "+ peso + " "+ imc}</Text>*/}
+                    <Text style={styles.textLabel}>Peso:</Text>
 
-    </View>
+                    {msgErroPeso!=null? <Text style={styles.error}>{msgErroPeso}</Text>:<View></View>}
+                    
+                    <TextInput 
+                        style={styles.input}
+                        placeholder="Peso em Kg"
+                        onChangeText={setPeso}
+                        value={peso}
+                        keyboardType='numeric'
+                    />
+
+                    <TouchableOpacity
+                        style={styles.button} 
+                        onPress={()=>validation()}
+                    >
+                        <Text style={styles.textButton} >Calcular Imc</Text>
+                    </TouchableOpacity>
+                </View>            
+                : 
+                <View style={styles.viewResultContainer}>
+                    <ResultImc imc ={imc} risco={msgClassification} />
+                    <TouchableOpacity 
+                        style={styles.button} 
+                        onPress={()=>reset()}
+                    >
+                        <Text style={styles.textButton}>Calcular Novamente</Text>
+                    </TouchableOpacity>
+                </View>
+                }
+        </View>
+    </TouchableWithoutFeedback>
   );
 }
